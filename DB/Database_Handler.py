@@ -1,8 +1,8 @@
 from sqlite3 import connect
 from sqlite3 import Error
-from Image import *
+from DB.Image import *
 from datetime import date
-from Doctor import *
+from DB.Doctor import *
 
 
 def create_table(conn, create_table_sql):
