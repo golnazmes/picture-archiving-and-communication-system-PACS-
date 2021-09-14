@@ -1,23 +1,19 @@
 import matplotlib.pyplot as plt
 from pydicom import dcmread
 from cv2 import imwrite
-from os import listdir, path
+from os import listdir, path, mkdir
 import pandas as pd
 import csv
 from skimage.exposure import equalize_adapthist  # badtaresh kard!
 
+
 # TODO: handle exceptions when file is broken or non-existent
 # TODO: handle image quality improvement
-
-
-
-folder_path = f"D:\MedicalData\liver\^245652_20210825"
-jpg_folder_path = f"D:\MedicalData\jpg"
-# csv_folder_path = f"D:\MedicalData\liver\^245652_20210825\csv"
+# TODO: iterate through all folders of a directory
 
 
 def make_ds(file_path):
-    ds = dcmread(file_path) #TODO:transfersyntaxuid
+    ds = dcmread(file_path)  # TODO:transfersyntaxuid
     return ds
 
 
@@ -56,9 +52,14 @@ def save_image_as_jpg(ds, image_path):
     return image
 
 
-def convert_dicom_directory_to_jpg(folder_path, jpg_folder_path):
+def convert_dicom_directory_to_jpg(folder_path):
     images_path = listdir(folder_path)
-    for n, image in enumerate(images_path):#the folder should only contain .dcm else there will be an error
+    first, second = path.split(folder_path)
+    second = second + "_JPG"
+    jpg_folder_path = path.join(first, second)  # TODO:error handling
+    if not path.exists(jpg_folder_path):
+        mkdir(jpg_folder_path)
+    for n, image in enumerate(images_path):  #TODO: the folder should only contain .dcm else there will be an error
         ds = make_ds(path.join(folder_path, image))
         image = image.replace('.dcm', '.jpg')
         image_path = path.join(jpg_folder_path, image)
@@ -68,8 +69,17 @@ def convert_dicom_directory_to_jpg(folder_path, jpg_folder_path):
 
 
 def convert_dicom_directory_to_csv(folder_path):
-    dicom_image_description = pd.read_csv("dicom_image_description.csv")
-    with open('dataset.csv', 'w', newline='') as csvfile:
+    csv_path = r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\dicom_manipulator\dicom_image_description.csv"
+    dicom_image_description = pd.read_csv(csv_path)
+    print("convert")
+    first, second = path.split(folder_path)
+    second = second + "_CSV"
+    dataset_path = path.join(first, second)  # TODO:error handling
+    if not path.exists(dataset_path):
+        mkdir(dataset_path)
+    print(dataset_path)
+    dataset_path = dataset_path + r"\dataset.csv"
+    with open(dataset_path, 'w', newline='') as csvfile:
         fieldnames = list(dicom_image_description["Description"])
         writer = csv.writer(csvfile, delimiter=',')
         writer.writerow(fieldnames)
@@ -78,7 +88,7 @@ def convert_dicom_directory_to_csv(folder_path):
             ds = make_ds(path.join(folder_path, image))
             rows = []
             for field in fieldnames:
-                if ds.get(field, None) is None: #to avoid error if a file is broken
+                if ds.get(field, None) is None:  # to avoid error if a file is broken
                     rows.append('')
                 else:
                     x = str(ds.data_element(field)).replace("'", "")
@@ -89,16 +99,18 @@ def convert_dicom_directory_to_csv(folder_path):
 
 
 def test1():
-    file_path=f"D:\MedicalData\liver\^245652_20210825\FILE10.dcm"
+    file_path = f"D:\MedicalData\liver\^245652_20210825\FILE10.dcm"
     ds = make_ds(file_path)
-    print_patient_image_data(ds,file_path)
+    print_patient_image_data(ds, file_path)
     show_image(ds)
     image_path = make_image_path_based_on_file_path(file_path)
     save_image_as_jpg(ds, image_path)
 
 
 def test2():
-    convert_dicom_directory_to_jpg(folder_path, jpg_folder_path)
+    folder_path = f"D:\MedicalData\liver\^245652_20210825"
+    convert_dicom_directory_to_jpg(folder_path)
     convert_dicom_directory_to_csv(folder_path)
 
 
+test2()

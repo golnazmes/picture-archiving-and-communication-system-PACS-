@@ -5,9 +5,11 @@
 # Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
+from PyQt5.QtWidgets import QFileDialog, QWidget
+from PyQt5 import QtCore, QtWidgets
+from dicom_manipulator.dicom_handler import *
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from UI.choose_directory import  *
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -109,6 +111,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.convert_project_data_button.clicked.connect(self.convert_project_data)
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -133,14 +136,20 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(_translate("MainWindow", "view scroll bar"))
 
     def convert_project_data(self):
-        response = QtWidgets.QFileDialog.getExistingDirectory(
-                self,
-                caption='Select a folder'
-            )
+        print("here")
 
+        response = QFileDialog.getExistingDirectory(
+            QWidget(),
+            caption='Select a folder'
+        )
+        print(response)
+        convert_dicom_directory_to_jpg(response)
+        convert_dicom_directory_to_csv(response)
         return response
 
+
 import sys
+
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = QtWidgets.QMainWindow()
 ui = Ui_MainWindow()

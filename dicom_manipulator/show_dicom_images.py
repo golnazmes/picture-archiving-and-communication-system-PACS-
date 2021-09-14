@@ -1,5 +1,5 @@
 import numpy as np
-from dicom_handler import *
+from dicom_manipulator.dicom_handler import *
 
 
 class IndexTracker(object):
