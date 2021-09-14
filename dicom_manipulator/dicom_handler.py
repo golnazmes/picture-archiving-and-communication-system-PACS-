@@ -113,4 +113,4 @@ def test2():
     convert_dicom_directory_to_csv(folder_path)
 
 
-test2()
+
