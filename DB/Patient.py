@@ -1,4 +1,4 @@
-from Doctor import *
+from DB.Doctor import *
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy import Date, ForeignKey
 

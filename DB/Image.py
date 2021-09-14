@@ -1,4 +1,4 @@
-from Patient import *
+from DB.Patient import *
 
 
 class Image(Base):
