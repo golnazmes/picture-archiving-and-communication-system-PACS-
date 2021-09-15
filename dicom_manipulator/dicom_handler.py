@@ -94,6 +94,7 @@ def convert_dicom_directory_to_jpg(folder_path):
         save_image_as_jpg(ds, image_path)
         if n % 50 == 0:
             print('{} image converted'.format(n))
+    return jpg_folder_path
 
 
 def convert_dicom_directory_to_csv(folder_path):

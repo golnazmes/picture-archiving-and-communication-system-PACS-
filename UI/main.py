@@ -246,7 +246,7 @@ class Ui_MainWindow(object):
         self.apply_edit_button.clicked.connect(self.apply_edit)
         self.batch_button.clicked.connect(self.get_UI_ready_for_ML)
         self.extract_csv_file_button.clicked.connect(self.extract_csv_file)
-
+        self.extract_jpg_file_button.clicked.connect(self.extract_jpg_files)
     def view_dcm_data(self):
         response = QFileDialog.getOpenFileName(
             QWidget(),
@@ -375,9 +375,23 @@ class Ui_MainWindow(object):
         csv_path = path.realpath(csv_path)
         print(csv_path)
         startfile(csv_path)
-        self.batch_message_container.setText("converting done!")
+        self.batch_message_container.setText("choose operation!")
 
-    
+    def extract_jpg_files(self):
+        response = QFileDialog.getExistingDirectory(
+            QWidget(),
+            caption='Select a folder to extract jpg files from its data'
+        )
+        # print(response)
+        if not response:
+            return
+        self.batch_message_container.setText("converting...")
+        jpg_path = convert_dicom_directory_to_jpg(response)
+        print(jpg_path)
+        csv_path = path.realpath(jpg_path)
+        print(jpg_path)
+        startfile(jpg_path)
+        self.batch_message_container.setText("choose operation!")
 
 
 if __name__ == "__main__":
