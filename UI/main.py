@@ -17,6 +17,8 @@ from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as Navigatio
 
 from dicom_manipulator.dicom_handler import *
 from UI.input_data import *
+from dicom_manipulator.images_to_video import convert_pictures_to_video
+
 global name_in, id_in, date_in, size_in, type_in
 
 
@@ -106,7 +108,7 @@ class Ui_MainWindow(object):
         self.type_edit.setGeometry(QtCore.QRect(340, 320, 113, 20))
         self.type_edit.setObjectName("lineEdit_5")
         self.extract_video_button = QtWidgets.QPushButton(self.centralwidget)
-        self.extract_video_button.setGeometry(QtCore.QRect(1000, 580, 81, 23))
+        self.extract_video_button.setGeometry(QtCore.QRect(20, 520, 161, 41))
         self.extract_video_button.setObjectName("pushButton")
         self.scroll_button = QtWidgets.QPushButton(self.centralwidget)
         self.scroll_button.setGeometry(QtCore.QRect(1000, 610, 81, 23))
@@ -126,6 +128,7 @@ class Ui_MainWindow(object):
         # buttons and clicks
         self.convert_project_data_button.clicked.connect(self.convert_project_data)
         self.view_patient_data_button.clicked.connect(self.view_dcm_data)
+        self.extract_video_button.clicked.connect(self.extract_video)
 
         # hidden elements
         self.name_edit.setHidden(True)
@@ -148,7 +151,7 @@ class Ui_MainWindow(object):
         self.type_label.setHidden(True)
         self.type_tag.setHidden(True)
 
-        self.extract_video_button.setHidden(True)
+        #self.extract_video_button.setHidden(True)
         self.scroll_button.setHidden(True)
 
         # image loads
@@ -193,13 +196,10 @@ class Ui_MainWindow(object):
         self.scroll_button.setText(_translate("MainWindow", "view scroll bar"))
 
     def convert_project_data(self):
-        print("here")
-
         response = QFileDialog.getExistingDirectory(
             QWidget(),
             caption='Select a folder'
         )
-        print(response)
         convert_dicom_directory_to_jpg(response)
         convert_dicom_directory_to_csv(response)
 
@@ -227,7 +227,7 @@ class Ui_MainWindow(object):
 
         self.size_label.setHidden(False)
         self.size_tag.setHidden(False)
-        self.date_label.setText(str(row) + "*" + str(column))
+        self.size_label.setText(str(row) + "*" + str(column))
 
         self.type_label.setHidden(False)
         self.type_tag.setHidden(False)
@@ -273,6 +273,23 @@ class Ui_MainWindow(object):
         show_image(ds)
         image_path = make_image_path_based_on_file_path(file_path)
         save_image_as_jpg(ds, image_path)
+
+    def extract_video(self):
+        response = QFileDialog.getExistingDirectory(
+            QWidget(),
+            caption='Select a folder'
+        )
+        print(response)
+        folder_path = response
+        first, second = path.split(folder_path)
+        second = second + "_MP4"
+        mp4_folder_path = path.join(first, second)  # TODO:error handling
+        if not path.exists(mp4_folder_path):
+            mkdir(mp4_folder_path)
+        video_path = mp4_folder_path + r"\video.mp4"
+        frames_per_sec = 10
+        time = 1
+        convert_pictures_to_video(folder_path, video_path, frames_per_sec, time)
 
 
 import sys

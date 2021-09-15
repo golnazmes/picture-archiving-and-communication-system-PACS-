@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
+import numpy as np
 from pydicom import dcmread
 from cv2 import imwrite
+from PIL import Image
 from os import listdir, path, mkdir
 import pandas as pd
 import csv
@@ -13,7 +15,7 @@ from skimage.exposure import equalize_adapthist  # badtaresh kard!
 
 
 def make_ds(file_path):
-    ds = dcmread(file_path)  # TODO:transfersyntaxuid
+    ds = dcmread(file_path,force=True)  # TODO:transfersyntaxuid
     return ds
 
 
@@ -53,9 +55,9 @@ def save_image_as_jpg(ds, image_path):
     #return image
     plt.imshow(ds.pixel_array, cmap=plt.cm.gray)
     x,image_name = path.split(image_path)
-    print(image_name,x)
+    #print(image_name,x)
     image = plt.savefig(image_path,bbox_inches="tight",pad_inches = 0)
-    print(image)
+    #print(image)
     return image
 
 def edit_dicom(ds,file_path,name=None, id=None, date=None, size=(512,512), type=None):
@@ -66,6 +68,19 @@ def edit_dicom(ds,file_path,name=None, id=None, date=None, size=(512,512), type=
     ds.Columns = size[1]
     ds.ImageType = type#TODO where to check for errors
     ds.save_as(file_path)
+
+def add_dicom(ds, image_path, name=None, id=None, date=None, size=(512, 512), type=None):
+    ds.PatientName = name
+    ds.PatientID = id
+    ds.StudyDate = date
+    ds.Rows = size[0]
+    ds.Columns = size[1]
+    ds.ImageType = type  # TODO where to check for errors
+    img =Image.open(image_path) #TODO: this line does not work, must be solved :?////
+    dicom_path = image_path.replace(".jpg", ".dcm")
+    ds.PixelData = np.asarray(img).tobytes()
+    ds.save_as(dicom_path)
+
 
 
 def convert_dicom_directory_to_jpg(folder_path):
@@ -115,6 +130,7 @@ def convert_dicom_directory_to_csv(folder_path):
 
 
 def test1():
+    #check showing and saving individual images,done
     file_path = f"D:\MedicalData\liver\^245652_20210825\FILE10.dcm"
     ds = make_ds(file_path)
     print_patient_image_data(ds, file_path)
@@ -124,12 +140,14 @@ def test1():
 
 
 def test2():
+    #check converting for ML purposes,done
     folder_path = f"D:\MedicalData\liver\^245652_20210825"
     convert_dicom_directory_to_jpg(folder_path)
     convert_dicom_directory_to_csv(folder_path)
 
 
 def test3():
+    #check edit dicom,done
     file_path = f"D:\MedicalData\liver\^245652_20210825\FILE10.dcm"
     ds = make_ds(file_path)
     print_patient_image_data(ds, file_path)
@@ -137,4 +155,15 @@ def test3():
     #print_patient_image_data(ds,file_path)
 
 
-test3()
+def test4():
+    #check add dicom(make dicom out of jpg files) #TODO: needs maintenance
+    image_path = r"C:\Users\Golnaz\Desktop\Figure_1.png"
+    x,dicom_path = path.split(image_path)
+    dicom_path =path.join(x,dicom_path.replace(".png",".dcm"))
+    with open(dicom_path,'w') as fp:
+        pass
+    ds = make_ds(dicom_path)
+    add_dicom(ds,image_path,"gollnaz")
+    print_patient_image_data(ds,dicom_path)
+
+

@@ -1,6 +1,6 @@
 from sqlite3 import connect
 from sqlite3 import Error
-from DB.Image import *
+from DB.myImage import *
 from datetime import date
 from DB.Doctor import *
 
