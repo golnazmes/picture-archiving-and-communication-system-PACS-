@@ -1,17 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'main_page.ui'
+# Form implementation generated from reading ui file 'main3.ui'
 #
 # Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
-import random
 
+from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPixmap
-from PyQt5 import QtCore, QtWidgets
-from dicom_manipulator.dicom_handler import *
-from UI.input_data import *
-from dicom_manipulator.images_to_video import convert_pictures_to_video
 
 
 class Ui_MainWindow(object):
@@ -135,12 +131,48 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        # my code
+        #my code
         # buttons and clicks
-        self.initial_hidden_elements()
+
+        # hidden elements
+        self.name_edit.setHidden(True)
+        self.name_label.setHidden(True)
+        self.name_tag.setHidden(True)
+
+        self.id_edit.setHidden(True)
+        self.id_label.setHidden(True)
+        self.id_tag.setHidden(True)
+
+        self.date_edit.setHidden(True)
+        self.date_label.setHidden(True)
+        self.date_tag.setHidden(True)
+
+        self.row_edit.setHidden(True)
+        self.column_edit.setHidden(True)
+        self.size_label.setHidden(True)
+        self.size_tag.setHidden(True)
+
+        self.type_edit.setHidden(True)
+        self.type_label.setHidden(True)
+        self.type_tag.setHidden(True)
+        self.apply_edit_button.setHidden(True)
 
         # image loads
-        self.set_initial_logo_background()
+        logo = QPixmap(
+            r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\UI\images and logos\logo.png")
+
+        self.logo_container.setScaledContents(True)
+        self.logo_container.setPixmap(logo)
+        background = QPixmap(
+            r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\UI\images and logos\background.png")
+        self.image_container.setScaledContents(True)
+        self.image_container.setPixmap(background)
+        # text inputs
+        self.name_edit.textChanged.connect(get_name)
+        self.id_edit.textChanged.connect(get_id)
+        self.date_edit.textChanged.connect(get_date)
+        self.type_edit.textChanged.connect(get_type)
+        self.size_edit.textChanged.connect(get_size)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -171,60 +203,9 @@ class Ui_MainWindow(object):
         self.main_background_container.setText(_translate("MainWindow", "main_background"))
         self.batch_background_container.setText(_translate("MainWindow", "batch_background"))
 
-    def initial_hidden_elements(self):
-        # hidden elements
-        self.name_edit.setHidden(True)
-        self.name_label.setHidden(True)
-        self.name_tag.setHidden(True)
-
-        self.id_edit.setHidden(True)
-        self.id_label.setHidden(True)
-        self.id_tag.setHidden(True)
-
-        self.date_edit.setHidden(True)
-        self.date_label.setHidden(True)
-        self.date_tag.setHidden(True)
-
-        self.row_edit.setHidden(True)
-        self.column_edit.setHidden(True)
-        self.size_label.setHidden(True)
-        self.size_tag.setHidden(True)
-        self.multiply_edit.setHidden(True)
-
-        self.type_edit.setHidden(True)
-        self.type_label.setHidden(True)
-        self.type_tag.setHidden(True)
-
-        self.view_in_plot_button.setHidden(True)
-        self.apply_edit_button.setHidden(True)
-        self.save_as_jpg_button.setHidden(True)
-        self.send_data_button.setHidden(True)
-
-        self.extract_csv_file_button.setHidden(True)
-        self.extract_jpg_file_button.setHidden(True)
-        self.extract_mp4_file_button.setHidden(True)
-
-        self.batch_background_container.setHidden(True)
-        self.dicom_image_container.setHidden(True)
-        self.batch_message_container.setHidden(True)
-
-    def set_initial_logo_background(self):
-        # image loads
-        logo = QPixmap(
-            r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\UI\images and logos\logo.png")
-
-        self.logo_container.setScaledContents(True)
-        self.logo_container.setPixmap(logo)
-        background = QPixmap(
-            r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\UI\images and logos\background.png")
-        self.main_background_container.setScaledContents(True)
-        self.main_background_container.setPixmap(background)
-
-
 
 if __name__ == "__main__":
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()

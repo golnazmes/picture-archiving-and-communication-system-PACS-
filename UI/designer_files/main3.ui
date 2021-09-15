@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1130</width>
-    <height>876</height>
+    <height>878</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,81 +18,16 @@
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>90</y>
+      <y>150</y>
       <width>20</width>
-      <height>771</height>
+      <height>711</height>
      </rect>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="add_patient_data_button">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>170</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>add a patient data</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="convert_patient_data_button">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>400</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>convert a patient data(jpg)</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="send_patient_data_button">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>330</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>send a patient data</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="convert_project_data_button">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>460</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string> convert a project data for ML</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="view_patient_data_button">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>270</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>view a patient data</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="edit_patient_data_button">
+   <widget class="QPushButton" name="batch_button">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -102,14 +37,27 @@
      </rect>
     </property>
     <property name="text">
-     <string>edit a patient data</string>
+     <string>work with batch data</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="one_patient_button">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>170</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>work with one patient data</string>
     </property>
    </widget>
    <widget class="Line" name="header_line">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>80</y>
+      <y>130</y>
       <width>1131</width>
       <height>20</height>
      </rect>
@@ -118,12 +66,12 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="image_container">
+   <widget class="QLabel" name="dicom_image_container">
     <property name="geometry">
      <rect>
-      <x>540</x>
+      <x>690</x>
       <y>160</y>
-      <width>531</width>
+      <width>381</width>
       <height>401</height>
      </rect>
     </property>
@@ -131,11 +79,11 @@
      <string>TextLabel</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="name_tag">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>200</y>
+      <x>260</x>
+      <y>190</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -144,11 +92,11 @@
      <string>Name:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="id_tag">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>230</y>
+      <x>260</x>
+      <y>220</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -157,11 +105,11 @@
      <string>ID:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="date_tag">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>260</y>
+      <x>260</x>
+      <y>250</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -170,11 +118,11 @@
      <string>Date:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="size_tag">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>290</y>
+      <x>260</x>
+      <y>280</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -183,11 +131,11 @@
      <string>size:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="type_tag">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>320</y>
+      <x>260</x>
+      <y>310</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -196,11 +144,11 @@
      <string>type:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="name_label">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>200</y>
+      <x>300</x>
+      <y>190</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -209,11 +157,11 @@
      <string>name_label</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="size_label">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>290</y>
+      <x>300</x>
+      <y>280</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -222,11 +170,11 @@
      <string>size_label</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_8">
+   <widget class="QLabel" name="id_label">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>230</y>
+      <x>300</x>
+      <y>220</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -235,11 +183,11 @@
      <string>id_label</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_9">
+   <widget class="QLabel" name="date_label">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>260</y>
+      <x>300</x>
+      <y>250</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -248,11 +196,11 @@
      <string>date_label</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_10">
+   <widget class="QLabel" name="type_label">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>320</y>
+      <x>300</x>
+      <y>310</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -261,116 +209,220 @@
      <string>type_label</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="name_edit">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>200</y>
-      <width>113</width>
+      <x>370</x>
+      <y>190</y>
+      <width>261</width>
       <height>20</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="id_edit">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>230</y>
-      <width>113</width>
+      <x>370</x>
+      <y>220</y>
+      <width>261</width>
       <height>20</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
+   <widget class="QLineEdit" name="date_edit">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>260</y>
-      <width>113</width>
+      <x>370</x>
+      <y>250</y>
+      <width>261</width>
       <height>20</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="row_edit">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>290</y>
-      <width>113</width>
+      <x>370</x>
+      <y>280</y>
+      <width>31</width>
       <height>20</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_5">
+   <widget class="QLineEdit" name="type_edit">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>320</y>
-      <width>113</width>
+      <x>370</x>
+      <y>310</y>
+      <width>261</width>
       <height>20</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="view_in_plot_button">
     <property name="geometry">
      <rect>
-      <x>1000</x>
-      <y>580</y>
+      <x>270</x>
+      <y>380</y>
       <width>81</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>extract mp4</string>
+     <string>view in plot </string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="save_as_jpg_button">
     <property name="geometry">
      <rect>
-      <x>1000</x>
-      <y>610</y>
+      <x>270</x>
+      <y>410</y>
       <width>81</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>view scroll bar</string>
+     <string>save as jpg</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_11">
+   <widget class="QLabel" name="logo_container">
     <property name="geometry">
      <rect>
       <x>30</x>
       <y>10</y>
-      <width>151</width>
-      <height>71</height>
+      <width>121</width>
+      <height>121</height>
      </rect>
     </property>
     <property name="text">
      <string>logo</string>
     </property>
    </widget>
-   <widget class="QWidget" name="dicom_widget" native="true">
-    <property name="geometry">
-     <rect>
-      <x>500</x>
-      <y>140</y>
-      <width>601</width>
-      <height>391</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="apply_edit_button">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>360</y>
-      <width>75</width>
+      <x>270</x>
+      <y>350</y>
+      <width>81</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>apply</string>
+     <string>apply edit</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="send_data_button">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>440</y>
+      <width>81</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>send data</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="column_edit">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>280</y>
+      <width>31</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="multiply_edit">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>280</y>
+      <width>21</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>*</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="extract_csv_file_button">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>590</y>
+      <width>411</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>extract csv file</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="extract_jpg_file_button">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>650</y>
+      <width>411</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>extract jpg files</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="extract_mp4_file_button">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>710</y>
+      <width>411</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>extract mp4</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="batch_message_container">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>170</y>
+      <width>361</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>message container</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="main_background_container">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>300</y>
+      <width>381</width>
+      <height>401</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>main_background</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="batch_background_container">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>260</y>
+      <width>371</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>batch_background</string>
     </property>
    </widget>
   </widget>
