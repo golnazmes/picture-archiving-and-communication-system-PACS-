@@ -8,7 +8,7 @@ from skimage.exposure import equalize_adapthist  # badtaresh kard!
 
 
 # TODO: handle exceptions when file is broken or non-existent
-# TODO: handle image quality improvement
+# TODO: handle image quality improvement: DONE using matplotlib instead
 # TODO: iterate through all folders of a directory
 
 
@@ -54,7 +54,7 @@ def save_image_as_jpg(ds, image_path):
     plt.imshow(ds.pixel_array, cmap=plt.cm.gray)
     x,image_name = path.split(image_path)
     print(image_name,x)
-    image = plt.savefig(image_path,bbox_inches="tight")
+    image = plt.savefig(image_path,bbox_inches="tight",pad_inches = 0)
     print(image)
     return image
 
@@ -111,7 +111,7 @@ def test1():
     file_path = f"D:\MedicalData\liver\^245652_20210825\FILE10.dcm"
     ds = make_ds(file_path)
     print_patient_image_data(ds, file_path)
-    #show_image(ds)
+    show_image(ds)
     image_path = make_image_path_based_on_file_path(file_path)
     save_image_as_jpg(ds, image_path)
 
@@ -123,4 +123,3 @@ def test2():
 
 
 
-test1()

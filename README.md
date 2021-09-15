@@ -1,9 +1,6 @@
 # picture-archiving-and-communication-system-PACS-
 a university project on "system design and analysis" course
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> ec652009dafe547795d77603660eeb4785441c76
+
 
 **_Project Requirement Document_**\
 Project Title: Picture Archiving and Communication System (PACS)\
@@ -30,8 +27,4 @@ Some of the proposed actions include:\
 
 
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 1cdd9e711af9ecd5df88c453654e980a8fd3512a
->>>>>>> ec652009dafe547795d77603660eeb4785441c76
+

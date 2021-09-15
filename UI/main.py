@@ -153,12 +153,12 @@ class Ui_MainWindow(object):
 
         # image loads
         logo = QPixmap(
-            r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\UI\images and logos\3.png")
+            r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\UI\images and logos\logo.png")
 
         self.logo_container.setScaledContents(True)
         self.logo_container.setPixmap(logo)
         background = QPixmap(
-            r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\UI\images and logos\final.png")
+            r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\UI\images and logos\background.png")
         self.image_container.setScaledContents(True)
         self.image_container.setPixmap(background)
         # text inputs
