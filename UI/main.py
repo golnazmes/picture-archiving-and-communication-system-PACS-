@@ -247,6 +247,7 @@ class Ui_MainWindow(object):
         self.batch_button.clicked.connect(self.get_UI_ready_for_ML)
         self.extract_csv_file_button.clicked.connect(self.extract_csv_file)
         self.extract_jpg_file_button.clicked.connect(self.extract_jpg_files)
+        self.extract_mp4_file_button.clicked.connect(self.extract_mp4)
     def view_dcm_data(self):
         response = QFileDialog.getOpenFileName(
             QWidget(),
@@ -388,9 +389,25 @@ class Ui_MainWindow(object):
         self.batch_message_container.setText("converting...")
         jpg_path = convert_dicom_directory_to_jpg(response)
         print(jpg_path)
-        csv_path = path.realpath(jpg_path)
+        jpg_path = path.realpath(jpg_path)
         print(jpg_path)
         startfile(jpg_path)
+        self.batch_message_container.setText("choose operation!")
+
+    def extract_mp4(self):
+        response = QFileDialog.getExistingDirectory(
+            QWidget(),
+            caption='Select a jpg folder to extract video from its data'
+        )
+        # print(response)
+        if not response:
+            return
+        self.batch_message_container.setText("converting...")
+        mp4_path = convert_pictures_to_video(response, frames_per_sec=10, time=1)
+        print(mp4_path)
+        mp4_path = path.realpath(mp4_path)
+        print(mp4_path)
+        startfile(mp4_path)
         self.batch_message_container.setText("choose operation!")
 
 
