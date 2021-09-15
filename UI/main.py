@@ -9,12 +9,21 @@ import random
 
 from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtWidgets import QFileDialog, QWidget
+
 from dicom_manipulator.dicom_handler import *
 from UI.input_data import *
 from dicom_manipulator.images_to_video import convert_pictures_to_video
 
 
 class Ui_MainWindow(object):
+    @property
+    def classFilePath(self):
+        return self.__FilePathName
+
+    @classFilePath.setter
+    def classFilePath(self, value):
+        self.__FilePathName = value
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1130, 878)
@@ -136,11 +145,10 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         # my code
-        # buttons and clicks
         self.initial_hidden_elements()
-
-        # image loads
         self.set_initial_logo_background()
+        self.set_text_inputs()
+        self.set_buttons()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -211,16 +219,77 @@ class Ui_MainWindow(object):
     def set_initial_logo_background(self):
         # image loads
         logo = QPixmap(
-            r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\UI\images and logos\logo.png")
+            r"C:\Users\Golnaz\Desktop\final\UI\images and logos\logo.png")
 
         self.logo_container.setScaledContents(True)
         self.logo_container.setPixmap(logo)
         background = QPixmap(
-            r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\UI\images and logos\background.png")
+            r"C:\Users\Golnaz\Desktop\final\UI\images and logos\background.png")
         self.main_background_container.setScaledContents(True)
         self.main_background_container.setPixmap(background)
 
+    def set_text_inputs(self):
+        # text inputs
+        self.name_edit.textChanged.connect(get_name)
+        self.id_edit.textChanged.connect(get_id)
+        self.date_edit.textChanged.connect(get_date)
+        self.type_edit.textChanged.connect(get_type)
+        self.row_edit.textChanged.connect(get_row)
+        self.column_edit.textChanged.connect(get_column)
 
+    def set_buttons(self):
+        self.one_patient_button.clicked.connect(self.view_dcm_data)
+        self.view_in_plot_button.clicked.connect(self.view_in_plot)
+
+    def view_dcm_data(self):
+        response = QFileDialog.getOpenFileName(
+            QWidget(),
+            caption='Select a file to view'
+        )
+        if not response[0]:
+            return
+        print(response)
+        file_path = response[0]
+        self.classFilePath = file_path
+        ds = make_ds(file_path)
+        name, id, date, row, column, type = print_patient_image_data(ds, file_path)
+        print(name, id, date, row, column, type)
+        self.name_label.setHidden(False)
+        self.name_tag.setHidden(False)
+        self.name_label.setText(name)
+
+        self.id_label.setHidden(False)
+        self.id_tag.setHidden(False)
+        self.id_label.setText(id)
+
+        self.date_label.setHidden(False)
+        self.date_tag.setHidden(False)
+        self.date_label.setText(str(date))
+
+        self.size_label.setHidden(False)
+        self.size_tag.setHidden(False)
+        self.size_label.setText(str(row) + "*" + str(column))
+
+        self.type_label.setHidden(False)
+        self.type_tag.setHidden(False)
+        self.type_label.setText(str(type[0]) if type is not None else " ")
+
+        self.view_in_plot_button.setHidden(False)
+        self.apply_edit_button.setHidden(False)
+        self.save_as_jpg_button.setHidden(False)
+        self.send_data_button.setHidden(False)
+
+        #show_image(ds)
+        image_path = make_image_path_based_on_file_path(file_path)
+        save_image_as_jpg(ds, image_path)
+        dicom_image = QPixmap(image_path)
+        self.main_background_container.setHidden(True)
+        self.dicom_image_container.setHidden(False)
+        self.dicom_image_container.setScaledContents(True)
+        self.dicom_image_container.setPixmap(dicom_image)
+
+    def view_in_plot(self):
+        show_image(make_ds(self.classFilePath))
 
 if __name__ == "__main__":
     import sys
@@ -231,4 +300,3 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-

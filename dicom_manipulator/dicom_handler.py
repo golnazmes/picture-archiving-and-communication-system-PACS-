@@ -50,18 +50,12 @@ def make_image_path_based_on_file_path(file_path):
 
 
 def save_image_as_jpg(ds, image_path):
-    image = ds.pixel_array
-    #plt.imsave(image_path, image)
-    #img = Image.fromarray(image)
-    #img.save("A.jpg")
-    return
-    '''
     plt.imshow(ds.pixel_array, cmap=plt.cm.gray)
     x,image_name = path.split(image_path)
     #print(image_name,x)
     image = plt.savefig(image_path,bbox_inches="tight",pad_inches = 0)
     #print(image)
-    return image'''
+    return image
 
 def edit_dicom(ds,file_path,name=None, id=None, date=None, size=(512,512), type=None):
     ds.PatientName = name

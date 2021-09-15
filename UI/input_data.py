@@ -1,4 +1,4 @@
-global name_in, id_in, date_in, size_in, type_in
+global name_in, id_in, date_in, row_in,column_in, type_in
 def get_name(text):
     global name_in
     name_in = text
@@ -14,10 +14,15 @@ def get_date(text):
     date_in = text
     print(date_in)
 
-def get_size(text):
-    global size_in
-    size_in = text
-    print(size_in)
+def get_row(text):
+    global row_in
+    row_in = text
+    print(row_in)
+
+def get_column(text):
+    global column_in
+    column_in = text
+    print(column_in)
 
 
 def get_type(text):

@@ -7,45 +7,9 @@
         self.edit_patient_data_button.clicked.connect(self.edit_dcm_data)
         self.apply_edit_button.clicked.connect(self.apply_edit)
 
-        # hidden elements
-        self.name_edit.setHidden(True)
-        self.name_label.setHidden(True)
-        self.name_tag.setHidden(True)
 
-        self.id_edit.setHidden(True)
-        self.id_label.setHidden(True)
-        self.id_tag.setHidden(True)
 
-        self.date_edit.setHidden(True)
-        self.date_label.setHidden(True)
-        self.date_tag.setHidden(True)
 
-        self.size_edit.setHidden(True)
-        self.size_label.setHidden(True)
-        self.size_tag.setHidden(True)
-
-        self.type_edit.setHidden(True)
-        self.type_label.setHidden(True)
-        self.type_tag.setHidden(True)
-        self.scroll_button.setHidden(True)
-        self.apply_edit_button.setHidden(True)
-
-        # image loads
-        logo = QPixmap(
-            r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\UI\images and logos\logo.png")
-
-        self.logo_container.setScaledContents(True)
-        self.logo_container.setPixmap(logo)
-        background = QPixmap(
-            r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\UI\images and logos\background.png")
-        self.image_container.setScaledContents(True)
-        self.image_container.setPixmap(background)
-        # text inputs
-        self.name_edit.textChanged.connect(get_name)
-        self.id_edit.textChanged.connect(get_id)
-        self.date_edit.textChanged.connect(get_date)
-        self.type_edit.textChanged.connect(get_type)
-        self.size_edit.textChanged.connect(get_size)
 
 
     # my functions
