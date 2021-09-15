@@ -240,11 +240,12 @@ class Ui_MainWindow(object):
     def set_buttons(self):
         self.one_patient_button.clicked.connect(self.view_dcm_data)
         self.view_in_plot_button.clicked.connect(self.view_in_plot)
+        self.save_as_jpg_button.clicked.connect(self.save_as_jpg)
 
     def view_dcm_data(self):
         response = QFileDialog.getOpenFileName(
             QWidget(),
-            caption='Select a file to view'
+            caption='Select a dicom file to view'
         )
         if not response[0]:
             return
@@ -279,7 +280,6 @@ class Ui_MainWindow(object):
         self.save_as_jpg_button.setHidden(False)
         self.send_data_button.setHidden(False)
 
-        #show_image(ds)
         image_path = make_image_path_based_on_file_path(file_path)
         save_image_as_jpg(ds, image_path)
         dicom_image = QPixmap(image_path)
@@ -290,6 +290,18 @@ class Ui_MainWindow(object):
 
     def view_in_plot(self):
         show_image(make_ds(self.classFilePath))
+
+    def save_as_jpg(self):
+        response = QFileDialog.getExistingDirectory(
+            QWidget(),
+            caption='Select a folder in which you want to save jpg'
+        )
+        #print(response)
+        if not response:
+            return
+        #print(response)
+        image_path = path.join(response,"figure.png")
+        save_image_as_jpg(make_ds(self.classFilePath),image_path)
 
 if __name__ == "__main__":
     import sys
