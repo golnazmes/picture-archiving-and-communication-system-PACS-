@@ -58,7 +58,14 @@ def save_image_as_jpg(ds, image_path):
     print(image)
     return image
 
-
+def edit_dicom(ds,file_path,name=None, id=None, date=None, size=(512,512), type=None):
+    ds.PatientName = name
+    ds.PatientID = id
+    ds.StudyDate = date
+    ds.Rows = size[0]
+    ds.Columns = size[1]
+    ds.ImageType = type#TODO where to check for errors
+    ds.save_as(file_path)
 
 
 def convert_dicom_directory_to_jpg(folder_path):
@@ -122,4 +129,12 @@ def test2():
     convert_dicom_directory_to_csv(folder_path)
 
 
+def test3():
+    file_path = f"D:\MedicalData\liver\^245652_20210825\FILE10.dcm"
+    ds = make_ds(file_path)
+    print_patient_image_data(ds, file_path)
+    #edit_dicom(ds,file_path,"golnaz")
+    #print_patient_image_data(ds,file_path)
 
+
+test3()
