@@ -5,10 +5,19 @@
 # Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
+import random
+
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QFileDialog, QWidget
+from PyQt5.QtWidgets import QFileDialog, QWidget, QVBoxLayout
 from PyQt5 import QtCore, QtWidgets
+from matplotlib.backends.backend_template import FigureCanvas
+
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
+
 from dicom_manipulator.dicom_handler import *
+from UI.input_data import *
+global name_in, id_in, date_in, size_in, type_in
 
 
 class Ui_MainWindow(object):
@@ -22,9 +31,9 @@ class Ui_MainWindow(object):
         self.menu_line.setFrameShape(QtWidgets.QFrame.VLine)
         self.menu_line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.menu_line.setObjectName("menu_line")
-        self.add_patient_data_button = QtWidgets.QPushButton(self.centralwidget)
-        self.add_patient_data_button.setGeometry(QtCore.QRect(20, 130, 161, 41))
-        self.add_patient_data_button.setObjectName("add_patient_data_button")
+        # self.add_patient_data_button = QtWidgets.QPushButton(self.centralwidget)
+        # self.add_patient_data_button.setGeometry(QtCore.QRect(20, 130, 161, 41))
+        # self.add_patient_data_button.setObjectName("add_patient_data_button")
         self.convert_patient_data_button = QtWidgets.QPushButton(self.centralwidget)
         self.convert_patient_data_button.setGeometry(QtCore.QRect(20, 400, 161, 41))
         self.convert_patient_data_button.setObjectName("convert_patient_data_button")
@@ -79,7 +88,7 @@ class Ui_MainWindow(object):
         self.type_label.setGeometry(QtCore.QRect(270, 320, 141, 16))
         self.type_label.setObjectName("label_10")
         self.logo_container = QtWidgets.QLabel(self.centralwidget)
-        self.logo_container.setGeometry(QtCore.QRect(30,10,100,70))
+        self.logo_container.setGeometry(QtCore.QRect(30, 10, 100, 70))
         self.logo_container.setObjectName("label_11")
         self.name_edit = QtWidgets.QLineEdit(self.centralwidget)
         self.name_edit.setGeometry(QtCore.QRect(340, 200, 113, 20))
@@ -116,6 +125,7 @@ class Ui_MainWindow(object):
         # my code
         # buttons and clicks
         self.convert_project_data_button.clicked.connect(self.convert_project_data)
+        self.view_patient_data_button.clicked.connect(self.view_dcm_data)
 
         # hidden elements
         self.name_edit.setHidden(True)
@@ -147,15 +157,21 @@ class Ui_MainWindow(object):
 
         self.logo_container.setScaledContents(True)
         self.logo_container.setPixmap(logo)
-        background = QPixmap(r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\UI\images and logos\final.png")
+        background = QPixmap(
+            r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\UI\images and logos\final.png")
         self.image_container.setScaledContents(True)
         self.image_container.setPixmap(background)
         # text inputs
+        self.name_edit.textChanged.connect(get_name)
+        self.id_edit.textChanged.connect(get_id)
+        self.date_edit.textChanged.connect(get_date)
+        self.type_edit.textChanged.connect(get_type)
+        self.size_edit.textChanged.connect(get_size)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.add_patient_data_button.setText(_translate("MainWindow", "add a patient data"))
+        # self.add_patient_data_button.setText(_translate("MainWindow", "add a patient data"))
         self.convert_patient_data_button.setText(_translate("MainWindow", "convert a patient data(jpg)"))
         self.send_patient_data_button.setText(_translate("MainWindow", "send a patient data"))
         self.convert_project_data_button.setText(_translate("MainWindow", " convert a project data for ML"))
@@ -186,7 +202,77 @@ class Ui_MainWindow(object):
         print(response)
         convert_dicom_directory_to_jpg(response)
         convert_dicom_directory_to_csv(response)
-        return response
+
+    def view_dcm_data(self):
+        response = QFileDialog.getOpenFileName(
+            QWidget(),
+            caption='Select a file to view'
+        )
+        print(response)
+        file_path = response[0]
+        ds = make_ds(file_path)
+        name, id, date, row, column, type = print_patient_image_data(ds, file_path)
+        print(name, id, date, row, column, type)
+        self.name_label.setHidden(False)
+        self.name_tag.setHidden(False)
+        self.name_label.setText(name)
+
+        self.id_label.setHidden(False)
+        self.id_tag.setHidden(False)
+        self.id_label.setText(id)
+
+        self.date_label.setHidden(False)
+        self.date_tag.setHidden(False)
+        self.date_label.setText(str(date))
+
+        self.size_label.setHidden(False)
+        self.size_tag.setHidden(False)
+        self.date_label.setText(str(row) + "*" + str(column))
+
+        self.type_label.setHidden(False)
+        self.type_tag.setHidden(False)
+        self.type_label.setText(str(type[0]) if type is not None else " ")
+
+        self.extract_video_button.setHidden(False)
+
+        show_image(ds)
+        image_path = make_image_path_based_on_file_path(file_path)
+        save_image_as_jpg(ds, image_path)
+
+    def edit_dcm_data(self):
+        response = QFileDialog.getOpenFileName(
+            QWidget(),
+            caption='Select a file to edit'
+        )
+        print(response)
+        file_path = response[0]
+        ds = make_ds(file_path)
+        name, id, date, row, column, type = print_patient_image_data(ds, file_path)
+        print(name, id, date, row, column, type)
+        self.name_edit.setText(name)
+        self.name_tag.setHidden(False)
+
+        self.id_edit.setText(id)
+        self.id_tag.setHidden(False)
+        #TODO: to be continued!
+
+        self.date_label.setHidden(False)
+        self.date_tag.setHidden(False)
+        self.date_label.setText(str(date))
+
+        self.size_label.setHidden(False)
+        self.size_tag.setHidden(False)
+        self.date_label.setText(str(row) + "*" + str(column))
+
+        self.type_label.setHidden(False)
+        self.type_tag.setHidden(False)
+        self.type_label.setText(str(type[0]) if type is not None else " ")
+
+        self.extract_video_button.setHidden(False)
+
+        show_image(ds)
+        image_path = make_image_path_based_on_file_path(file_path)
+        save_image_as_jpg(ds, image_path)
 
 
 import sys

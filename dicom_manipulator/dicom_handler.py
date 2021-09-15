@@ -34,6 +34,7 @@ def print_patient_image_data(ds, file_path):
 
     # use .get() if not sure the item exists, and want a default value if missing
     print(f"Slice location...: {ds.get('SliceLocation', '(missing)')}")
+    return display_name,ds.PatientID,ds.StudyDate,ds.Rows,ds.Columns,ds.ImageType
 
 
 def show_image(ds):
@@ -47,9 +48,17 @@ def make_image_path_based_on_file_path(file_path):
 
 
 def save_image_as_jpg(ds, image_path):
-    image = ds.pixel_array
-    imwrite(image_path, image)
+    #image = ds.pixel_array
+    #imwrite(image_path, image)
+    #return image
+    plt.imshow(ds.pixel_array, cmap=plt.cm.gray)
+    x,image_name = path.split(image_path)
+    print(image_name,x)
+    image = plt.savefig(image_path,bbox_inches="tight")
+    print(image)
     return image
+
+
 
 
 def convert_dicom_directory_to_jpg(folder_path):
@@ -102,7 +111,7 @@ def test1():
     file_path = f"D:\MedicalData\liver\^245652_20210825\FILE10.dcm"
     ds = make_ds(file_path)
     print_patient_image_data(ds, file_path)
-    show_image(ds)
+    #show_image(ds)
     image_path = make_image_path_based_on_file_path(file_path)
     save_image_as_jpg(ds, image_path)
 
@@ -114,3 +123,4 @@ def test2():
 
 
 
+test1()

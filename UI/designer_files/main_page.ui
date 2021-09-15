@@ -350,6 +350,16 @@
      <string>logo</string>
     </property>
    </widget>
+   <widget class="QWidget" name="dicom_widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>140</y>
+      <width>601</width>
+      <height>391</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
