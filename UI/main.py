@@ -9,7 +9,7 @@ import random
 from os import system, startfile
 
 from PyQt5.QtGui import QPixmap
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtWidgets import QFileDialog, QWidget
 
 from dicom_manipulator.dicom_handler import *
@@ -153,7 +153,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle("Picture Archiving Communication System")
+        MainWindow.setWindowIcon(QtGui.QIcon(r"C:\Users\Golnaz\Desktop\final\UI\images and logos\logo.png"))
         self.batch_button.setText(_translate("MainWindow", "work with batch data"))
         self.one_patient_button.setText(_translate("MainWindow", "work with one patient data"))
         self.dicom_image_container.setText(_translate("MainWindow", "TextLabel"))
@@ -249,6 +250,7 @@ class Ui_MainWindow(object):
         self.extract_jpg_file_button.clicked.connect(self.extract_jpg_files)
         self.extract_mp4_file_button.clicked.connect(self.extract_mp4)
     def view_dcm_data(self):
+        self.initial_hidden_elements()
         response = QFileDialog.getOpenFileName(
             QWidget(),
             caption='Select a dicom file to view'

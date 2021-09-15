@@ -39,4 +39,3 @@ def test_images_to_video():
     convert_pictures_to_video(folder_path, frames_per_sec, time)
 
 
-#test_images_to_video()
