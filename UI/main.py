@@ -6,6 +6,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 import random
+from os import system, startfile
 
 from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore, QtWidgets
@@ -237,10 +238,14 @@ class Ui_MainWindow(object):
         self.row_edit.textChanged.connect(get_row)
         self.column_edit.textChanged.connect(get_column)
 
+
     def set_buttons(self):
         self.one_patient_button.clicked.connect(self.view_dcm_data)
         self.view_in_plot_button.clicked.connect(self.view_in_plot)
         self.save_as_jpg_button.clicked.connect(self.save_as_jpg)
+        self.apply_edit_button.clicked.connect(self.apply_edit)
+        self.batch_button.clicked.connect(self.get_UI_ready_for_ML)
+        self.extract_csv_file_button.clicked.connect(self.extract_csv_file)
 
     def view_dcm_data(self):
         response = QFileDialog.getOpenFileName(
@@ -302,6 +307,78 @@ class Ui_MainWindow(object):
         #print(response)
         image_path = path.join(response,"figure.png")
         save_image_as_jpg(make_ds(self.classFilePath),image_path)
+
+    def apply_edit(self):
+        ds = make_ds(self.classFilePath)
+        name, id, date, row, column, type = print_patient_image_data(ds, self.classFilePath)
+        print(name, id, date, row, column, type)
+
+        self.name_edit.setText(name)
+        self.name_label.setHidden(True)
+        self.name_tag.setHidden(False)
+        self.name_edit.setHidden(False)
+
+        self.id_edit.setText(id)
+        self.id_label.setHidden(True)
+        self.id_tag.setHidden(False)
+        self.id_edit.setHidden(False)
+
+        self.date_tag.setHidden(False)
+        self.date_label.setHidden(True)
+        self.date_edit.setText(str(date))
+        self.date_edit.setHidden(False)
+
+        self.size_tag.setHidden(False)
+        self.size_label.setHidden(True)
+        self.row_edit.setText(str(row))
+        self.column_edit.setText(str(column))
+        self.row_edit.setHidden(False)
+        self.column_edit.setHidden(False)
+
+        self.type_label.setHidden(True)
+        self.type_tag.setHidden(False)
+        self.type_edit.setText(str(type[0]) if type is not None else " ")
+        self.type_edit.setHidden(False)
+
+        self.multiply_edit.setHidden(False)
+        #TODO: next click must change data
+
+    def get_UI_ready_for_ML(self):
+        self.initial_hidden_elements()
+
+        self.main_background_container.setHidden(True)
+        self.batch_message_container.setHidden(False)
+        self.batch_background_container.setHidden(False)
+
+        self.batch_message_container.setText("choose operation!")
+        batch_background = QPixmap(
+            r"C:\Users\Golnaz\Desktop\final\UI\images and logos\background.png")
+
+        self.batch_background_container.setScaledContents(True)
+        self.batch_background_container.setPixmap(batch_background)
+
+        self.extract_csv_file_button.setHidden(False)
+        self.extract_jpg_file_button.setHidden(False)
+        self.extract_mp4_file_button.setHidden(False)
+
+    def extract_csv_file(self):
+        response = QFileDialog.getExistingDirectory(
+            QWidget(),
+            caption='Select a folder to extract csv from its data'
+        )
+        #print(response)
+        if not response:
+            return
+        self.batch_message_container.setText("converting...")
+        csv_path = convert_dicom_directory_to_csv(response)
+        print(csv_path)
+        csv_path = path.realpath(csv_path)
+        print(csv_path)
+        startfile(csv_path)
+        self.batch_message_container.setText("converting done!")
+
+    
+
 
 if __name__ == "__main__":
     import sys

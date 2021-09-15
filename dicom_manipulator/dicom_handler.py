@@ -97,7 +97,7 @@ def convert_dicom_directory_to_jpg(folder_path):
 
 
 def convert_dicom_directory_to_csv(folder_path):
-    csv_path = r"C:\Users\Golnaz\Desktop\system design and analysis\picture-archiving-and-communication-system-PACS-\dicom_manipulator\dicom_image_description.csv"
+    csv_path = r"C:\Users\Golnaz\Desktop\final\dicom_manipulator\dicom_image_description.csv"
     dicom_image_description = pd.read_csv(csv_path)
     print("convert")
     first, second = path.split(folder_path)
@@ -106,7 +106,8 @@ def convert_dicom_directory_to_csv(folder_path):
     if not path.exists(dataset_path):
         mkdir(dataset_path)
     print(dataset_path)
-    dataset_path = dataset_path + r"\dataset.csv"
+    dataset_folder_path = dataset_path
+    dataset_path = path.join(dataset_path ,"dataset.csv")
     with open(dataset_path, 'w', newline='') as csvfile:
         fieldnames = list(dicom_image_description["Description"])
         writer = csv.writer(csvfile, delimiter=',')
@@ -124,6 +125,7 @@ def convert_dicom_directory_to_csv(folder_path):
                     x = x[y + 2:]
                     rows.append(x)
             writer.writerow(rows)
+    return dataset_folder_path
 
 
 def test1():
