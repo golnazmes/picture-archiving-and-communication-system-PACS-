@@ -50,15 +50,18 @@ def make_image_path_based_on_file_path(file_path):
 
 
 def save_image_as_jpg(ds, image_path):
-    #image = ds.pixel_array
-    #imwrite(image_path, image)
-    #return image
+    image = ds.pixel_array
+    #plt.imsave(image_path, image)
+    #img = Image.fromarray(image)
+    #img.save("A.jpg")
+    return
+    '''
     plt.imshow(ds.pixel_array, cmap=plt.cm.gray)
     x,image_name = path.split(image_path)
     #print(image_name,x)
     image = plt.savefig(image_path,bbox_inches="tight",pad_inches = 0)
     #print(image)
-    return image
+    return image'''
 
 def edit_dicom(ds,file_path,name=None, id=None, date=None, size=(512,512), type=None):
     ds.PatientName = name
@@ -131,7 +134,7 @@ def convert_dicom_directory_to_csv(folder_path):
 
 def test1():
     #check showing and saving individual images,done
-    file_path = f"D:\MedicalData\liver\^245652_20210825\FILE10.dcm"
+    file_path = r"D:\MedicalData\liver\^245652_20210825\FILE10.dcm"
     ds = make_ds(file_path)
     print_patient_image_data(ds, file_path)
     show_image(ds)
@@ -141,14 +144,14 @@ def test1():
 
 def test2():
     #check converting for ML purposes,done
-    folder_path = f"D:\MedicalData\liver\^245652_20210825"
+    folder_path = r"D:\MedicalData\liver\^245652_20210825"
     convert_dicom_directory_to_jpg(folder_path)
     convert_dicom_directory_to_csv(folder_path)
 
 
 def test3():
     #check edit dicom,done
-    file_path = f"D:\MedicalData\liver\^245652_20210825\FILE10.dcm"
+    file_path = r"D:\MedicalData\liver\^245652_20210825\FILE10.dcm"
     ds = make_ds(file_path)
     print_patient_image_data(ds, file_path)
     #edit_dicom(ds,file_path,"golnaz")

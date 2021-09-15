@@ -19,8 +19,6 @@ from dicom_manipulator.dicom_handler import *
 from UI.input_data import *
 from dicom_manipulator.images_to_video import convert_pictures_to_video
 
-global name_in, id_in, date_in, size_in, type_in
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -36,6 +34,9 @@ class Ui_MainWindow(object):
         # self.add_patient_data_button = QtWidgets.QPushButton(self.centralwidget)
         # self.add_patient_data_button.setGeometry(QtCore.QRect(20, 130, 161, 41))
         # self.add_patient_data_button.setObjectName("add_patient_data_button")
+        self.apply_edit_button = QtWidgets.QPushButton(self.centralwidget)
+        self.apply_edit_button.setGeometry(QtCore.QRect(240,360,75,23))
+        self.apply_edit_button.setObjectName("apply_edit_data_button")
         self.convert_patient_data_button = QtWidgets.QPushButton(self.centralwidget)
         self.convert_patient_data_button.setGeometry(QtCore.QRect(20, 400, 161, 41))
         self.convert_patient_data_button.setObjectName("convert_patient_data_button")
@@ -126,9 +127,12 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         # my code
         # buttons and clicks
-        self.convert_project_data_button.clicked.connect(self.convert_project_data)
+        self.convert_project_data_button.clicked.connect(
+            self.convert_project_data)  # TODO: age taraf pashimoon she chizi entekhab nakone ro handle konam
         self.view_patient_data_button.clicked.connect(self.view_dcm_data)
         self.extract_video_button.clicked.connect(self.extract_video)
+        self.edit_patient_data_button.clicked.connect(self.edit_dcm_data)
+        self.apply_edit_button.clicked.connect(self.apply_edit)
 
         # hidden elements
         self.name_edit.setHidden(True)
@@ -150,9 +154,8 @@ class Ui_MainWindow(object):
         self.type_edit.setHidden(True)
         self.type_label.setHidden(True)
         self.type_tag.setHidden(True)
-
-        #self.extract_video_button.setHidden(True)
         self.scroll_button.setHidden(True)
+        self.apply_edit_button.setHidden(True)
 
         # image loads
         logo = QPixmap(
@@ -175,6 +178,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         # self.add_patient_data_button.setText(_translate("MainWindow", "add a patient data"))
+        self.apply_edit_button.setText((_translate("MainWindow","apply")))
         self.convert_patient_data_button.setText(_translate("MainWindow", "convert a patient data(jpg)"))
         self.send_patient_data_button.setText(_translate("MainWindow", "send a patient data"))
         self.convert_project_data_button.setText(_translate("MainWindow", " convert a project data for ML"))
@@ -195,6 +199,7 @@ class Ui_MainWindow(object):
         self.extract_video_button.setText(_translate("MainWindow", "extract mp4"))
         self.scroll_button.setText(_translate("MainWindow", "view scroll bar"))
 
+    # my functions
     def convert_project_data(self):
         response = QFileDialog.getExistingDirectory(
             QWidget(),
@@ -249,30 +254,38 @@ class Ui_MainWindow(object):
         ds = make_ds(file_path)
         name, id, date, row, column, type = print_patient_image_data(ds, file_path)
         print(name, id, date, row, column, type)
+
         self.name_edit.setText(name)
         self.name_tag.setHidden(False)
+        self.name_edit.setHidden(False)
 
         self.id_edit.setText(id)
         self.id_tag.setHidden(False)
-        #TODO: to be continued!
+        self.id_edit.setHidden(False)
 
-        self.date_label.setHidden(False)
         self.date_tag.setHidden(False)
-        self.date_label.setText(str(date))
+        self.date_edit.setText(str(date))
+        self.date_edit.setHidden(False)
 
-        self.size_label.setHidden(False)
         self.size_tag.setHidden(False)
-        self.date_label.setText(str(row) + "*" + str(column))
+        self.size_edit.setText(str(row) + "*" + str(column))
+        self.size_edit.setHidden(False)
 
-        self.type_label.setHidden(False)
         self.type_tag.setHidden(False)
-        self.type_label.setText(str(type[0]) if type is not None else " ")
-
-        self.extract_video_button.setHidden(False)
+        self.type_edit.setText(str(type[0]) if type is not None else " ")
+        self.type_edit.setHidden(False)
 
         show_image(ds)
         image_path = make_image_path_based_on_file_path(file_path)
         save_image_as_jpg(ds, image_path)
+        print_patient_image_data(ds, file_path)
+
+    def apply_edit(self):
+        file_path = f"D:\MedicalData\liver\^245652_20210825\FILE10.dcm"
+        ds = make_ds(file_path)
+        print_patient_image_data(ds, file_path)
+        edit_dicom(ds, file_path, name_in, id_in, date_in, size_in, type_in)
+        print_patient_image_data(ds, file_path)
 
     def extract_video(self):
         response = QFileDialog.getExistingDirectory(
