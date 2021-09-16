@@ -12,9 +12,9 @@ from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtWidgets import QFileDialog, QWidget
 
-from dicom_manipulator.dicom_handler import *
+from dicom_manipulator.single_dicom_handler import *
 from UI.input_data import *
-from dicom_manipulator.images_to_video import convert_pictures_to_video
+from dicom_manipulator.batch_dicom_handler import convert_pictures_to_video
 
 
 class Ui_MainWindow(object):
@@ -405,7 +405,7 @@ class Ui_MainWindow(object):
         if not response:
             return
         self.batch_message_container.setText("converting...")
-        mp4_path = convert_pictures_to_video(response, frames_per_sec=10, time=1)
+        mp4_path = convert_jpg_directory_to_video(response, frames_per_sec=10, time=1)
         print(mp4_path)
         mp4_path = path.realpath(mp4_path)
         print(mp4_path)
