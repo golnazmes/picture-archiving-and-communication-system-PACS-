@@ -13,8 +13,9 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtWidgets import QFileDialog, QWidget
 
 from dicom_manipulator.single_dicom_handler import *
+
 from UI.input_data import *
-from dicom_manipulator.batch_dicom_handler import convert_pictures_to_video
+
 
 
 class Ui_MainWindow(object):
@@ -413,12 +414,4 @@ class Ui_MainWindow(object):
         self.batch_message_container.setText("choose operation!")
 
 
-if __name__ == "__main__":
-    import sys
 
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
