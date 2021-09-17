@@ -19,6 +19,7 @@ class Signup(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("Begin with PACS")
         MainWindow.resize(421, 503)
+        MainWindow.setWindowIcon(QtGui.QIcon(r"C:\Users\Golnaz\Desktop\final\UI\images and logos\logo.png"))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.username_label = QtWidgets.QLabel(self.centralwidget)
@@ -55,7 +56,7 @@ class Signup(object):
         self.email_edit.setGeometry(QtCore.QRect(180, 170, 101, 20))
         self.email_edit.setObjectName("email_edit")
         self.sign_up_logo_container = QtWidgets.QLabel(self.centralwidget)
-        self.sign_up_logo_container.setGeometry(QtCore.QRect(150, 10, 91, 61))
+        self.sign_up_logo_container.setGeometry(QtCore.QRect(150, 80, 91, 61))
         self.sign_up_logo_container.setObjectName("sign_up_logo_container")
         self.start_button = QtWidgets.QPushButton(self.centralwidget)
         self.start_button.setGeometry(QtCore.QRect(150, 310, 75, 23))
@@ -105,7 +106,7 @@ class Signup(object):
 
         self.first_page_logo_container.setScaledContents(True)
         self.first_page_logo_container.setPixmap(logo)
-        MainWindow.setWindowIcon(QtGui.QIcon(r"C:\Users\Golnaz\Desktop\final\UI\images and logos\logo.png"))
+
 
     def text_inputs(self):
         self.email_edit.textChanged.connect(get_email)
@@ -122,14 +123,30 @@ class Signup(object):
         main_page.setupUi(MainWindow)
         MainWindow.show()
     def signup(self):
-        pass
+        self.email_edit.setHidden(False)
+        self.email_label.setHidden(False)
+        self.telegram_id_edit.setHidden(False)
+        self.telegram_id_label.setHidden(False)
+        self.start_button.setHidden(False)
+        self.sign_up_logo_container.setHidden(False)
+        self.login_button.setHidden(True)
+        self.sign_up_button.setHidden(True)
+        self.first_page_logo_container.setHidden(True)
+        logo = QPixmap(
+            r"C:\Users\Golnaz\Desktop\final\UI\images and logos\background.png")
+
+        self.sign_up_logo_container.setScaledContents(True)
+        self.sign_up_logo_container.setPixmap(logo)
+        MainWindow.setWindowIcon(QtGui.QIcon(r"C:\Users\Golnaz\Desktop\final\UI\images and logos\logo.png"))
+
     def enter(self):
-        pass
+        self.login()
+
+
 
 
 
 if __name__ == "__main__":
-
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
