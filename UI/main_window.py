@@ -5,15 +5,13 @@
 # Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
-import random
-from os import system, startfile
+from os import startfile
 
 from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtWidgets import QFileDialog, QWidget
 
-from dicom_manipulator.single_dicom_handler import *
-
+from dicom_manipulator.batch_dicom_handler import *
 from UI.input_data import *
 
 
