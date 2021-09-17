@@ -299,16 +299,22 @@ class Ui_MainWindow(object):
         show_image(make_ds(self.classFilePath))
 
     def save_as_jpg(self):
-        response = QFileDialog.getExistingDirectory(
+        response = QFileDialog.getSaveFileName(
             QWidget(),
             caption='Select a folder in which you want to save jpg and your file name'
         )
-        #print(response)
-        if not response:
+        print(response)
+        if not response[0]:
             return
         #print(response)
-        image_path = path.join(response,"figure.png")
+        #image_path = path.join(response,"figure.png")
+        image_path = response[0]
         save_image_as_jpg(make_ds(self.classFilePath),image_path)
+        image_path, x = path.split(image_path)
+        print(image_path," ",x)
+        image_path = path.realpath(image_path)
+        print(image_path)
+        startfile(image_path)
 
     def apply_edit(self):
         ds = make_ds(self.classFilePath)
