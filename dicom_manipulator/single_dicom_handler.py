@@ -51,6 +51,11 @@ def make_image_path_based_on_file_path(file_path):
 def save_image_as_jpg(ds, image_path):
     plt.imshow(ds.pixel_array, cmap=plt.cm.gray)
     plt.savefig(image_path, bbox_inches="tight", pad_inches=0)
+    plt.gca().set_axis_off()
+    plt.subplots_adjust(top=1, bottom=0, right=1, left=0,
+                        hspace=0, wspace=0)
+    plt.margins(0, 0)
+    plt.savefig(image_path, bbox_inches="tight", pad_inches=0)
 
 
 def edit_dicom(ds, file_path, name=None, id=None, date=None, size=(512, 512), type=None):

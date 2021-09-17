@@ -301,7 +301,7 @@ class Ui_MainWindow(object):
     def save_as_jpg(self):
         response = QFileDialog.getExistingDirectory(
             QWidget(),
-            caption='Select a folder in which you want to save jpg'
+            caption='Select a folder in which you want to save jpg and your file name'
         )
         #print(response)
         if not response:
