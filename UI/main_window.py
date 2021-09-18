@@ -13,10 +13,41 @@ from PyQt5.QtWidgets import QFileDialog, QWidget
 
 from dicom_manipulator.batch_dicom_handler import *
 from UI.input_data import *
+global name_in, id_in, date_in, row_in,column_in, type_in
+
+def get_name(text):
+    global name_in
+    name_in = str(text)
+    print(name_in)
+
+def get_id(text):
+    global id_in
+    id_in = str(text)
+    print(id_in)
+
+def get_date(text):
+    global date_in
+    date_in = str(text)
+    print(date_in)
+
+def get_row(text):
+    global row_in
+    row_in = int(text)
+    print(row_in)
+
+def get_column(text):
+    global column_in
+    column_in = int(text)
+    print(column_in)
 
 
+def get_type(text):
+    global type_in
+    type_in = text.split(" ")
+    print(type_in)
 
 class Ui_MainWindow(object):
+    global name_in, id_in, date_in, row_in, column_in, type_in
     @property
     def classFilePath(self):
         return self.__FilePathName
@@ -105,6 +136,9 @@ class Ui_MainWindow(object):
         self.apply_edit_button = QtWidgets.QPushButton(self.centralwidget)
         self.apply_edit_button.setGeometry(QtCore.QRect(270, 350, 81, 23))
         self.apply_edit_button.setObjectName("apply_edit_button")
+        self.apply_edit_button_done = QtWidgets.QPushButton(self.centralwidget)
+        self.apply_edit_button_done.setGeometry(QtCore.QRect(370, 350, 81, 23))
+        self.apply_edit_button_done.setObjectName("apply_edit_button_done")
         self.send_data_button = QtWidgets.QPushButton(self.centralwidget)
         self.send_data_button.setGeometry(QtCore.QRect(270, 440, 81, 23))
         self.send_data_button.setObjectName("send_data_button")
@@ -171,6 +205,7 @@ class Ui_MainWindow(object):
         self.save_as_jpg_button.setText(_translate("MainWindow", "save as jpg"))
         self.logo_container.setText(_translate("MainWindow", "logo"))
         self.apply_edit_button.setText(_translate("MainWindow", "apply edit"))
+        self.apply_edit_button_done.setText(_translate("MainWindow", "edit done"))
         self.send_data_button.setText(_translate("MainWindow", "send data"))
         self.multiply_edit.setText(_translate("MainWindow", "*"))
         self.extract_csv_file_button.setText(_translate("MainWindow", "extract csv file"))
@@ -206,6 +241,7 @@ class Ui_MainWindow(object):
 
         self.view_in_plot_button.setHidden(True)
         self.apply_edit_button.setHidden(True)
+        self.apply_edit_button_done.setHidden(True)
         self.save_as_jpg_button.setHidden(True)
         self.send_data_button.setHidden(True)
 
@@ -244,23 +280,15 @@ class Ui_MainWindow(object):
         self.view_in_plot_button.clicked.connect(self.view_in_plot)
         self.save_as_jpg_button.clicked.connect(self.save_as_jpg)
         self.apply_edit_button.clicked.connect(self.apply_edit)
+        self.apply_edit_button_done.clicked.connect(self.edit_done)
         self.batch_button.clicked.connect(self.get_UI_ready_for_ML)
         self.extract_csv_file_button.clicked.connect(self.extract_csv_file)
         self.extract_jpg_file_button.clicked.connect(self.extract_jpg_files)
         self.extract_mp4_file_button.clicked.connect(self.extract_mp4)
-    def view_dcm_data(self):
-        self.initial_hidden_elements()
-        response = QFileDialog.getOpenFileName(
-            QWidget(),
-            caption='Select a dicom file to view'
-        )
-        if not response[0]:
-            return
-        print(response)
-        file_path = response[0]
-        self.classFilePath = file_path
-        ds = make_ds(file_path)
-        name, id, date, row, column, type = print_patient_image_data(ds, file_path)
+
+    def view_dcm_data_ui(self):
+        ds = make_ds(self.classFilePath)
+        name, id, date, row, column, type = print_patient_image_data(ds, self.classFilePath)
         print(name, id, date, row, column, type)
         self.name_label.setHidden(False)
         self.name_tag.setHidden(False)
@@ -280,20 +308,38 @@ class Ui_MainWindow(object):
 
         self.type_label.setHidden(False)
         self.type_tag.setHidden(False)
-        self.type_label.setText(str(type[0]) if type is not None else " ")
+        string = ""
+        print("type is:", type)
+        for i in type:
+            string += i + " "
+        string = string[:len(string) - 1]
+        self.type_label.setText(string)
 
         self.view_in_plot_button.setHidden(False)
         self.apply_edit_button.setHidden(False)
         self.save_as_jpg_button.setHidden(False)
         self.send_data_button.setHidden(False)
 
-        image_path = make_image_path_based_on_file_path(file_path)
+        image_path = make_image_path_based_on_file_path(self.classFilePath)
         save_image_as_jpg(ds, image_path)
         dicom_image = QPixmap(image_path)
         self.main_background_container.setHidden(True)
         self.dicom_image_container.setHidden(False)
         self.dicom_image_container.setScaledContents(True)
         self.dicom_image_container.setPixmap(dicom_image)
+
+    def view_dcm_data(self):
+        self.initial_hidden_elements()
+        response = QFileDialog.getOpenFileName(
+            QWidget(),
+            caption='Select a dicom file to view'
+        )
+        if not response[0]:
+            return
+        print(response)
+        file_path = response[0]
+        self.classFilePath = file_path
+        self.view_dcm_data_ui()
 
     def view_in_plot(self):
         show_image(make_ds(self.classFilePath))
@@ -345,11 +391,27 @@ class Ui_MainWindow(object):
 
         self.type_label.setHidden(True)
         self.type_tag.setHidden(False)
-        self.type_edit.setText(str(type[0]) if type is not None else " ")
+        string = ""
+        print("type is:",type)
+        for i in type:
+            string+=i+" "
+        string = string[:len(string)-1]
+        self.type_edit.setText(string)
         self.type_edit.setHidden(False)
 
         self.multiply_edit.setHidden(False)
+        self.apply_edit_button_done.setHidden(False)
         #TODO: next click must change data
+    def edit_done(self):
+        ds = make_ds(self.classFilePath)
+        name, id, date, row, column, type = print_patient_image_data(ds, self.classFilePath)
+        print(name, id, date, row, column, type)
+        edit_dicom(ds,self.classFilePath,name=name_in,id=id_in,date=date_in,size=(row_in,column_in),type=type_in)
+        name, id, date, row, column, type = print_patient_image_data(ds, self.classFilePath)
+        print(name, id, date, row, column, type)
+        self.initial_hidden_elements()
+        self.view_dcm_data_ui()
+
 
     def get_UI_ready_for_ML(self):
         self.initial_hidden_elements()

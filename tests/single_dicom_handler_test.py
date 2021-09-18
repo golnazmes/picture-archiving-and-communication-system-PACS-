@@ -30,6 +30,6 @@ def single_dicom_integrated_test():
 
 
 if __name__ == '__main__':
-    single_dicom_integrated_test()
+    #single_dicom_integrated_test()
     print("everything for single dicom manipulation works correctly.")
     pass
