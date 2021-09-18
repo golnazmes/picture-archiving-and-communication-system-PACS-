@@ -1,9 +1,9 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey
+from sqlalchemy import Column,String
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship, backref
+from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('sqlite:///project.db', echo=True)
+engine = create_engine(r'sqlite:///C:/Users/Golnaz/Desktop/final/project.db', echo=True)
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
