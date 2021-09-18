@@ -23,7 +23,6 @@ def print_patient_image_data(ds, file_path):
     print(f"Pixel Spacing....: {ds.PixelSpacing}")
     print(f"image type.......: {ds.ImageType}")
 
-    # use .get() if not sure the item exists, and want a default value if missing
     print(f"Slice location...: {ds.get('SliceLocation', '(missing)')}")
     return display_name, ds.PatientID, ds.StudyDate, ds.Rows, ds.Columns, ds.ImageType
 

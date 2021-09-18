@@ -30,7 +30,6 @@ class User(Base):
     @staticmethod
     def login_authenticate(username_, password_):
         my_object = session.query(User).filter(User.username == username_, User.password == password_).first()
-        print(my_object)
         if my_object:
             return True
         else:

@@ -17,9 +17,9 @@ def test_edit_dicom():
     file_path = r"D:\MedicalData\liver\^245652_20210825\FILE10.dcm"
     ds = make_ds(file_path)
     first = print_patient_image_data(ds, file_path)
-    edit_dicom(ds, file_path, "golnaz",size=(512,512))
+    edit_dicom(ds, file_path, "golnaz", size=(512, 512))
     second = print_patient_image_data(ds, file_path)
-    print(first,second)
+    print(first, second)
     assert first != second, "edit dicom does not work correctly."
 
 
@@ -30,6 +30,5 @@ def single_dicom_integrated_test():
 
 
 if __name__ == '__main__':
-    #single_dicom_integrated_test()
+    single_dicom_integrated_test()
     print("everything for single dicom manipulation works correctly.")
-    pass

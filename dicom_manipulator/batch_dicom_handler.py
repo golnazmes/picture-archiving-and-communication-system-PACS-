@@ -26,13 +26,11 @@ def convert_dicom_directory_to_jpg(folder_path):
 def convert_dicom_directory_to_csv(folder_path):
     csv_path = r"C:\Users\Golnaz\Desktop\final\dicom_manipulator\dicom_image_description.csv"
     dicom_image_description = pd.read_csv(csv_path)
-    print("convert")
     first, second = path.split(folder_path)
     second = second + "_CSV"
     dataset_path = path.join(first, second)
     if not path.exists(dataset_path):
         mkdir(dataset_path)
-    print(dataset_path)
     dataset_folder_path = dataset_path
     dataset_path = path.join(dataset_path, "dataset.csv")
     with open(dataset_path, 'w', newline='') as csvfile:

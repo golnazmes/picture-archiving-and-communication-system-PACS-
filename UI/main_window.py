@@ -12,37 +12,31 @@ global name_in, id_in, date_in, row_in, column_in, type_in
 def get_name(text):
     global name_in
     name_in = str(text)
-    print(name_in)
 
 
 def get_id(text):
     global id_in
     id_in = str(text)
-    print(id_in)
 
 
 def get_date(text):
     global date_in
     date_in = str(text)
-    print(date_in)
 
 
 def get_row(text):
     global row_in
     row_in = int(text)
-    print(row_in)
 
 
 def get_column(text):
     global column_in
     column_in = int(text)
-    print(column_in)
 
 
 def get_type(text):
     global type_in
     type_in = text.split(" ")
-    print(type_in)
 
 
 class Ui_MainWindow(object):
@@ -293,7 +287,6 @@ class Ui_MainWindow(object):
     def view_dcm_data_ui(self):
         ds = make_ds(self.classFilePath)
         name, id, date, row, column, type = print_patient_image_data(ds, self.classFilePath)
-        print(name, id, date, row, column, type)
         self.name_label.setHidden(False)
         self.name_tag.setHidden(False)
         self.name_label.setText(name)
@@ -313,7 +306,6 @@ class Ui_MainWindow(object):
         self.type_label.setHidden(False)
         self.type_tag.setHidden(False)
         string = ""
-        print("type is:", type)
         for i in type:
             string += i + " "
         string = string[:len(string) - 1]
@@ -340,7 +332,6 @@ class Ui_MainWindow(object):
         )
         if not response[0]:
             return
-        print(response)
         file_path = response[0]
         self.classFilePath = file_path
         self.view_dcm_data_ui()
@@ -353,23 +344,17 @@ class Ui_MainWindow(object):
             QWidget(),
             caption='Select a folder in which you want to save png and your file name'
         )
-        print(response)
         if not response[0]:
             return
-        # print(response)
-        # image_path = path.join(response,"figure.png")
         image_path = response[0]
         save_image_as_jpg(make_ds(self.classFilePath), image_path)
         image_path, x = path.split(image_path)
-        print(image_path, " ", x)
         image_path = path.realpath(image_path)
-        print(image_path)
         startfile(image_path)
 
     def apply_edit(self):
         ds = make_ds(self.classFilePath)
         name, id, date, row, column, type = print_patient_image_data(ds, self.classFilePath)
-        print(name, id, date, row, column, type)
 
         self.name_edit.setText(name)
         self.name_label.setHidden(True)
@@ -396,7 +381,6 @@ class Ui_MainWindow(object):
         self.type_label.setHidden(True)
         self.type_tag.setHidden(False)
         string = ""
-        print("type is:", type)
         for i in type:
             string += i + " "
         string = string[:len(string) - 1]
@@ -406,14 +390,11 @@ class Ui_MainWindow(object):
         self.multiply_edit.setHidden(False)
         self.apply_edit_button_done.setHidden(False)
 
-
     def edit_done(self):
         ds = make_ds(self.classFilePath)
         name, id, date, row, column, type = print_patient_image_data(ds, self.classFilePath)
-        print(name, id, date, row, column, type)
         edit_dicom(ds, self.classFilePath, name=name_in, id=id_in, date=date_in, size=(row_in, column_in), type=type_in)
         name, id, date, row, column, type = print_patient_image_data(ds, self.classFilePath)
-        print(name, id, date, row, column, type)
         self.initial_hidden_elements()
         self.view_dcm_data_ui()
 
@@ -440,14 +421,11 @@ class Ui_MainWindow(object):
             QWidget(),
             caption='Select a folder to extract csv from its data'
         )
-        # print(response)
         if not response:
             return
         self.batch_message_container.setText("converting...")
         csv_path = convert_dicom_directory_to_csv(response)
-        print(csv_path)
         csv_path = path.realpath(csv_path)
-        print(csv_path)
         startfile(csv_path)
         self.batch_message_container.setText("choose operation!")
 
@@ -456,14 +434,11 @@ class Ui_MainWindow(object):
             QWidget(),
             caption='Select a folder to extract png files from its data'
         )
-        # print(response)
         if not response:
             return
         self.batch_message_container.setText("converting...")
         jpg_path = convert_dicom_directory_to_jpg(response)
-        print(jpg_path)
         jpg_path = path.realpath(jpg_path)
-        print(jpg_path)
         startfile(jpg_path)
         self.batch_message_container.setText("choose operation!")
 
@@ -472,13 +447,10 @@ class Ui_MainWindow(object):
             QWidget(),
             caption='Select a png folder to extract video from its data'
         )
-        # print(response)
         if not response:
             return
         self.batch_message_container.setText("converting...")
         mp4_path = convert_jpg_directory_to_video(response, frames_per_sec=10, time=1)
-        print(mp4_path)
         mp4_path = path.realpath(mp4_path)
-        print(mp4_path)
         startfile(mp4_path)
         self.batch_message_container.setText("choose operation!")
