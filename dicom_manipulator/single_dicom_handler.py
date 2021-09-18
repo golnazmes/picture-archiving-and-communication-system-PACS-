@@ -35,6 +35,7 @@ def print_patient_image_data(ds, file_path):
 
 def show_image(ds):
     plt.imshow(ds.pixel_array, cmap=plt.cm.gray)
+    plt.gca().set_axis_on()
     plt.show()
 
 
@@ -50,7 +51,6 @@ def make_image_path_based_on_file_path(file_path):
 
 def save_image_as_jpg(ds, image_path):
     plt.imshow(ds.pixel_array, cmap=plt.cm.gray)
-    plt.savefig(image_path, bbox_inches="tight", pad_inches=0)
     plt.gca().set_axis_off()
     plt.subplots_adjust(top=1, bottom=0, right=1, left=0,
                         hspace=0, wspace=0)
