@@ -1,25 +1,6 @@
 global name_in, id_in, date_in, row_in,column_in, type_in
 global email_in,tel_in,username_in,password_in
 
-def get_email(text):
-    global email_in
-    email_in = text
-    print(email_in)
-
-def get_tel(text):
-    global tel_in
-    tel_in = text
-    print(tel_in)
-
-def get_username(text):
-    global username_in
-    username_in = text
-    print(username_in)
-
-def get_password(text):
-    global password_in
-    password_in = text
-    print(password_in)
 
 def get_name(text):
     global name_in
