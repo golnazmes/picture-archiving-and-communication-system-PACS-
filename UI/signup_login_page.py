@@ -10,39 +10,42 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QDesktopWidget
 
-from UI.input_data import *
-
 from UI.main_window import Ui_MainWindow
 from User_DB.User import *
 from User_DB.user_database import *
 
-global name_in, id_in, date_in, row_in,column_in, type_in
-global email_in,tel_in,username_in,password_in
+global name_in, id_in, date_in, row_in, column_in, type_in
+global email_in, tel_in, username_in, password_in
+
+
 def get_email(text):
     global email_in
     email_in = text
-    #print(email_in)
+    # print(email_in)
+
 
 def get_tel(text):
     global tel_in
     tel_in = text
-    #print(tel_in)
+    # print(tel_in)
+
 
 def get_username(text):
     global username_in
     username_in = text
-    #print(username_in)
+    # print(username_in)
+
 
 def get_password(text):
     global password_in
     password_in = text
-    #print(password_in)
-
+    # print(password_in)
 
 
 class Signup(object):
     global name_in, id_in, date_in, row_in, column_in, type_in
     global email_in, tel_in, username_in, password_in
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("Begin with PACS")
         MainWindow.resize(421, 503)
@@ -147,13 +150,13 @@ class Signup(object):
 
     def login(self):
         print("here")
-        #print(username_in, password_in)
-        #print(User.login_authenticate(username_in, password_in))
-        #if User.login_authenticate(username_in, password_in):
+        # print(username_in, password_in)
+        # print(User.login_authenticate(username_in, password_in))
+        # if User.login_authenticate(username_in, password_in):
         main_page.setupUi(MainWindow)
         MainWindow.show()
-        #else:
-            #print("login failed")  # TODO: add to ui
+        # else:
+        # print("login failed")  # TODO: add to ui
 
     def signup(self):
         self.email_edit.setHidden(False)
@@ -173,10 +176,10 @@ class Signup(object):
         MainWindow.setWindowIcon(QtGui.QIcon(r"C:\Users\Golnaz\Desktop\final\UI\images and logos\logo.png"))
 
     def enter(self):
-        #if User.signup_login(username_in, password_in, email_in, tel_in):
+        # if User.signup_login(username_in, password_in, email_in, tel_in):
         self.login()
-        #else:
-            #print("signup not valid")  # TODO: add to ui
+        # else:
+        # print("signup not valid")  # TODO: add to ui
 
 
 if __name__ == "__main__":

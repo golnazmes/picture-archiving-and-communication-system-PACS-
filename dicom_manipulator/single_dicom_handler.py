@@ -58,7 +58,8 @@ def save_image_as_jpg(ds, image_path):
     plt.savefig(image_path, bbox_inches="tight", pad_inches=0)
 
 
-def edit_dicom(ds, file_path, name="default", id="default", date="20171017", size=(512, 512), type=['ORIGINAL', 'PRIMARY', 'AXIAL', 'CT_SOM5 SPI']):
+def edit_dicom(ds, file_path, name="default", id="default", date="20171017", size=(512, 512),
+               type=['ORIGINAL', 'PRIMARY', 'AXIAL', 'CT_SOM5 SPI']):
     ds.PatientName = name
     ds.PatientID = id
     ds.StudyDate = date
