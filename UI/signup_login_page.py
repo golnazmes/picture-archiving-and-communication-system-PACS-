@@ -150,13 +150,13 @@ class Signup(object):
 
     def login(self):
         print("here")
-        # print(username_in, password_in)
-        # print(User.login_authenticate(username_in, password_in))
-        # if User.login_authenticate(username_in, password_in):
-        main_page.setupUi(MainWindow)
-        MainWindow.show()
-        # else:
-        # print("login failed")  # TODO: add to ui
+        print(username_in, password_in)
+        print(User.login_authenticate(username_in, password_in))
+        if User.login_authenticate(username_in, password_in):
+            main_page.setupUi(MainWindow)
+            MainWindow.show()
+        else:
+            print("login failed")  # TODO: add to ui
 
     def signup(self):
         self.email_edit.setHidden(False)
@@ -176,10 +176,12 @@ class Signup(object):
         MainWindow.setWindowIcon(QtGui.QIcon(r"C:\Users\Golnaz\Desktop\final\UI\images and logos\logo.png"))
 
     def enter(self):
-        # if User.signup_login(username_in, password_in, email_in, tel_in):
-        self.login()
-        # else:
-        # print("signup not valid")  # TODO: add to ui
+        if User.signup_authenticate(username_in, password_in, email_in, tel_in)==True:
+            new_user = User(username_in, password_in, email_in, tel_in)
+            new_user.insert_record()
+            self.login()
+        else:
+            print("signup not valid")  # TODO: add to ui
 
 
 if __name__ == "__main__":

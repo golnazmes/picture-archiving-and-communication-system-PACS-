@@ -44,6 +44,4 @@ class User(Base):
         if my_object:
             return False
         else:
-            new_user = User(username, password, email, telegram_id)
-            new_user.insert_record()
-            return False
+            return True
