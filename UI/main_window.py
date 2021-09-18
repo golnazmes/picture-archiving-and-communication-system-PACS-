@@ -1,18 +1,11 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'main_page.ui'
-#
-# Created by: PyQt5 UI code generator 5.9.2
-#
-# WARNING! All changes made in this file will be lost!
 from os import startfile
-
 from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtWidgets import QFileDialog, QWidget
 
 from dicom_manipulator.batch_dicom_handler import *
-from send_email import  *
+from send_email import *
+
 global name_in, id_in, date_in, row_in, column_in, type_in
 
 
@@ -210,14 +203,14 @@ class Ui_MainWindow(object):
         self.date_label.setText(_translate("MainWindow", "date_label"))
         self.type_label.setText(_translate("MainWindow", "type_label"))
         self.view_in_plot_button.setText(_translate("MainWindow", "view in plot "))
-        self.save_as_jpg_button.setText(_translate("MainWindow", "save as jpg"))
+        self.save_as_jpg_button.setText(_translate("MainWindow", "save as png"))
         self.logo_container.setText(_translate("MainWindow", "logo"))
         self.apply_edit_button.setText(_translate("MainWindow", "apply edit"))
         self.apply_edit_button_done.setText(_translate("MainWindow", "edit done"))
         self.send_data_button.setText(_translate("MainWindow", "send data"))
         self.multiply_edit.setText(_translate("MainWindow", "*"))
         self.extract_csv_file_button.setText(_translate("MainWindow", "extract csv file"))
-        self.extract_jpg_file_button.setText(_translate("MainWindow", "extract jpg files"))
+        self.extract_jpg_file_button.setText(_translate("MainWindow", "extract png files"))
         self.extract_mp4_file_button.setText(_translate("MainWindow", "extract mp4"))
         self.batch_message_container.setText(_translate("MainWindow", "message container"))
         self.main_background_container.setText(_translate("MainWindow", "main_background"))
@@ -295,7 +288,8 @@ class Ui_MainWindow(object):
         self.extract_mp4_file_button.clicked.connect(self.extract_mp4)
 
     def send_data(self):
-        open_mail("","send medical data","Hello!, this dicom file is for you.")
+        open_mail("", "send medical data", "Hello!, this dicom file is for you.")
+
     def view_dcm_data_ui(self):
         ds = make_ds(self.classFilePath)
         name, id, date, row, column, type = print_patient_image_data(ds, self.classFilePath)
@@ -357,7 +351,7 @@ class Ui_MainWindow(object):
     def save_as_jpg(self):
         response = QFileDialog.getSaveFileName(
             QWidget(),
-            caption='Select a folder in which you want to save jpg and your file name'
+            caption='Select a folder in which you want to save png and your file name'
         )
         print(response)
         if not response[0]:
@@ -411,7 +405,7 @@ class Ui_MainWindow(object):
 
         self.multiply_edit.setHidden(False)
         self.apply_edit_button_done.setHidden(False)
-        # TODO: next click must change data
+
 
     def edit_done(self):
         ds = make_ds(self.classFilePath)
@@ -460,7 +454,7 @@ class Ui_MainWindow(object):
     def extract_jpg_files(self):
         response = QFileDialog.getExistingDirectory(
             QWidget(),
-            caption='Select a folder to extract jpg files from its data'
+            caption='Select a folder to extract png files from its data'
         )
         # print(response)
         if not response:
@@ -476,7 +470,7 @@ class Ui_MainWindow(object):
     def extract_mp4(self):
         response = QFileDialog.getExistingDirectory(
             QWidget(),
-            caption='Select a jpg folder to extract video from its data'
+            caption='Select a png folder to extract video from its data'
         )
         # print(response)
         if not response:

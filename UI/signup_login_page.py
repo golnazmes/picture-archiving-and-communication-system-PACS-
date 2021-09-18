@@ -1,20 +1,9 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'signup_login_page.ui'
-#
-# Created by: PyQt5 UI code generator 5.9.2
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QDesktopWidget
 
 from UI.main_window import Ui_MainWindow
-from User_DB.User import *
 from User_DB.user_database import *
 
-global name_in, id_in, date_in, row_in, column_in, type_in
 global email_in, tel_in, username_in, password_in
 
 
@@ -59,10 +48,10 @@ class Signup(object):
         self.password_label.setGeometry(QtCore.QRect(110, 260, 61, 16))
         self.password_label.setObjectName("password_label")
         self.user_name_edit = QtWidgets.QLineEdit(self.centralwidget)
-        self.user_name_edit.setGeometry(QtCore.QRect(182, 230, 101, 20))
+        self.user_name_edit.setGeometry(QtCore.QRect(180, 230, 101, 20))
         self.user_name_edit.setObjectName("user_name_edit")
         self.pasword_edit = QtWidgets.QLineEdit(self.centralwidget)
-        self.pasword_edit.setGeometry(QtCore.QRect(182, 260, 101, 20))
+        self.pasword_edit.setGeometry(QtCore.QRect(180, 260, 101, 20))
         self.pasword_edit.setObjectName("pasword_edit")
         self.first_page_logo_container = QtWidgets.QLabel(self.centralwidget)
         self.first_page_logo_container.setGeometry(QtCore.QRect(120, 60, 161, 151))
@@ -73,14 +62,17 @@ class Signup(object):
         self.sign_up_button = QtWidgets.QPushButton(self.centralwidget)
         self.sign_up_button.setGeometry(QtCore.QRect(100, 380, 181, 31))
         self.sign_up_button.setObjectName("sign_up_button")
+        self.guest_button = QtWidgets.QPushButton(self.centralwidget)
+        self.guest_button.setGeometry(QtCore.QRect(100, 420, 181, 31))
+        self.guest_button.setObjectName("sign_up_button")
         self.telegram_id_edit = QtWidgets.QLineEdit(self.centralwidget)
         self.telegram_id_edit.setGeometry(QtCore.QRect(180, 200, 101, 20))
         self.telegram_id_edit.setObjectName("telegram_id_edit")
         self.telegram_id_label = QtWidgets.QLabel(self.centralwidget)
-        self.telegram_id_label.setGeometry(QtCore.QRect(108, 200, 61, 16))
+        self.telegram_id_label.setGeometry(QtCore.QRect(110, 200, 61, 16))
         self.telegram_id_label.setObjectName("telegram_id_label")
         self.email_label = QtWidgets.QLabel(self.centralwidget)
-        self.email_label.setGeometry(QtCore.QRect(108, 170, 61, 16))
+        self.email_label.setGeometry(QtCore.QRect(110, 170, 61, 16))
         self.email_label.setObjectName("email_label")
         self.email_edit = QtWidgets.QLineEdit(self.centralwidget)
         self.email_edit.setGeometry(QtCore.QRect(180, 170, 101, 20))
@@ -116,6 +108,7 @@ class Signup(object):
         self.first_page_logo_container.setText(_translate("MainWindow", "first_page_logo_container"))
         self.login_button.setText(_translate("MainWindow", "log in"))
         self.sign_up_button.setText(_translate("MainWindow", "not a member? sign up"))
+        self.guest_button.setText(_translate("MainWindow", "enter as guest"))
         self.telegram_id_label.setText(_translate("MainWindow", "telegram id"))
         self.email_label.setText(_translate("MainWindow", "email"))
         self.sign_up_logo_container.setText(_translate("MainWindow", "sign_up_logo_container"))
@@ -128,6 +121,7 @@ class Signup(object):
         self.telegram_id_label.setHidden(True)
         self.start_button.setHidden(True)
         self.sign_up_logo_container.setHidden(True)
+
 
     def set_initial_logo_background(self):
         # image loads
@@ -147,7 +141,11 @@ class Signup(object):
         self.login_button.clicked.connect(self.login)
         self.sign_up_button.clicked.connect(self.signup)
         self.start_button.clicked.connect(self.enter)
+        self.guest_button.clicked.connect(self.guest)
 
+    def guest(self):
+        main_page.setupUi(MainWindow)
+        MainWindow.show()
     def login(self):
         print("here")
         print(username_in, password_in)
@@ -156,7 +154,7 @@ class Signup(object):
             main_page.setupUi(MainWindow)
             MainWindow.show()
         else:
-            print("login failed")  # TODO: add to ui
+            print("login failed")
 
     def signup(self):
         self.email_edit.setHidden(False)
@@ -167,6 +165,7 @@ class Signup(object):
         self.sign_up_logo_container.setHidden(False)
         self.login_button.setHidden(True)
         self.sign_up_button.setHidden(True)
+        self.guest_button.setHidden(True)
         self.first_page_logo_container.setHidden(True)
         logo = QPixmap(
             r"C:\Users\Golnaz\Desktop\final\UI\images and logos\background.png")
@@ -176,12 +175,12 @@ class Signup(object):
         MainWindow.setWindowIcon(QtGui.QIcon(r"C:\Users\Golnaz\Desktop\final\UI\images and logos\logo.png"))
 
     def enter(self):
-        if User.signup_authenticate(username_in, password_in, email_in, tel_in)==True:
+        if User.signup_authenticate(username_in, password_in, email_in, tel_in) == True:
             new_user = User(username_in, password_in, email_in, tel_in)
             new_user.insert_record()
             self.login()
         else:
-            print("signup not valid")  # TODO: add to ui
+            print("signup not valid")
 
 
 if __name__ == "__main__":

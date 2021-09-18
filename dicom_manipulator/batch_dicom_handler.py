@@ -10,12 +10,12 @@ def convert_dicom_directory_to_jpg(folder_path):
     images_path = listdir(folder_path)
     first, second = path.split(folder_path)
     second = second + "_JPG"
-    jpg_folder_path = path.join(first, second)  # TODO:error handling
+    jpg_folder_path = path.join(first, second)
     if not path.exists(jpg_folder_path):
         mkdir(jpg_folder_path)
-    for n, image in enumerate(images_path):  # TODO: the folder should only contain .dcm else there will be an error
+    for n, image in enumerate(images_path):
         ds = make_ds(path.join(folder_path, image))
-        image = image.replace('.dcm', '.jpg')
+        image = image.replace('.dcm', '.png')
         image_path = path.join(jpg_folder_path, image)
         save_image_as_jpg(ds, image_path)
         if n % 50 == 0:
@@ -29,7 +29,7 @@ def convert_dicom_directory_to_csv(folder_path):
     print("convert")
     first, second = path.split(folder_path)
     second = second + "_CSV"
-    dataset_path = path.join(first, second)  # TODO:error handling
+    dataset_path = path.join(first, second)
     if not path.exists(dataset_path):
         mkdir(dataset_path)
     print(dataset_path)
@@ -59,7 +59,7 @@ def convert_jpg_directory_to_video(jpg_folder_path, frames_per_sec=10, time=1):
     frame_array = []
     first, second = path.split(jpg_folder_path)
     second = second + "_MP4"
-    mp4_folder_path = path.join(first, second)  # TODO:error handling
+    mp4_folder_path = path.join(first, second)
     if not path.exists(mp4_folder_path):
         mkdir(mp4_folder_path)
     folder_path = mp4_folder_path

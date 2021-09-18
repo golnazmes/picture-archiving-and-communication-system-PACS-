@@ -3,13 +3,8 @@ from pydicom import dcmread
 from os import path, mkdir
 
 
-# TODO: handle exceptions when file is broken or non-existent
-# TODO: handle image quality improvement: DONE using matplotlib instead
-# TODO: iterate through all folders of a directory
-
-
 def make_ds(file_path):
-    ds = dcmread(file_path, force=True)  # TODO:transfersyntaxuid
+    ds = dcmread(file_path, force=True)
     return ds
 
 
@@ -42,7 +37,7 @@ def show_image(ds):
 def make_image_path_based_on_file_path(file_path):
     first, dcm_file_name = path.split(file_path)
     first, folder_name = path.split(first)
-    image_path = path.join(first, folder_name + dcm_file_name.replace(".dcm", "JPG"))  # TODO:error handling
+    image_path = path.join(first, folder_name + dcm_file_name.replace(".dcm", "JPG"))
     if not path.exists(image_path):
         mkdir(image_path)
     image_path = image_path + r"\figure.jpg"
@@ -65,5 +60,5 @@ def edit_dicom(ds, file_path, name="default", id="default", date="20171017", siz
     ds.StudyDate = date
     ds.Rows = size[0]
     ds.Columns = size[1]
-    ds.ImageType = type  # TODO where to check for errors
+    ds.ImageType = type
     ds.save_as(file_path)
